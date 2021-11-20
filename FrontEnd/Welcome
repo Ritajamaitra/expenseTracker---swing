@@ -1,0 +1,165 @@
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.EmptyBorder;
+
+public class Welcome extends JFrame{
+    static Welcome frame;
+    private JPanel contentPanel;
+    public static void expense(String []args) {
+        EventQueue.invokeLater(new Runnable(){
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                try {
+                    frame = new Welcome();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    //TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+            
+        });
+    }
+    public Welcome(){
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 550, 550);
+        contentPanel = new JPanel();
+        contentPanel.setForeground(Color.GRAY);
+        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPanel);
+
+        JLabel label = new JLabel("FUNCTIONS");
+        JButton addincome= new JButton("ADD INCOME");
+        addincome.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddIncome.ai(new String[]{});
+                frame.dispose();
+                // TODO Auto-generated method stub
+                
+            }
+
+           
+        });
+        JButton addexpense= new JButton("ADD EXPENSE");
+        addexpense.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddExpense.ae(new String[]{});
+                frame.dispose();
+                // TODO Auto-generated method stub
+                
+            }
+
+           
+        });
+        JButton viewincome= new JButton("VIEW INCOME");
+        viewincome.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                viewIncome.vi(new String[]{});
+                frame.dispose();
+                // TODO Auto-generated method stub
+                
+            }
+
+           
+        });
+        JButton viewexpense= new JButton("VIEW EXPENSE");
+        viewexpense.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Viewexpense.ve(new String[]{});
+                frame.dispose();
+                // TODO Auto-generated method stub
+                
+            }
+
+           
+        });
+        JButton incomeexpense= new JButton("INCOME EXPENSE CURVE");
+        incomeexpense.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                income.in(new String[]{});
+                frame.dispose();
+                // TODO Auto-generated method stub
+                
+            }
+
+           
+        });
+      
+        JButton logout= new JButton("LOG OUT");
+        logout.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == logout) {
+                    int a = JOptionPane.showConfirmDialog(logout, "Are you sure?");
+                    if(a == JOptionPane.YES_OPTION){
+                        frame.dispose();
+                    }
+                }
+                frame.dispose();
+                // TODO Auto-generated method stub
+                
+            }
+
+           
+        });
+        GroupLayout gl_contentPane = new GroupLayout(contentPanel);
+            gl_contentPane.setHorizontalGroup(
+                gl_contentPane.createParallelGroup(Alignment.LEADING)
+                    .addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+                        .addContainerGap(81, Short.MAX_VALUE)
+                        .addComponent(label)
+                        .addGap(54))
+                    .addGroup(gl_contentPane.createSequentialGroup()
+                    .addGap(132)
+                    .addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+                        .addComponent(addexpense, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addincome, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(incomeexpense, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(logout, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(viewexpense, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(viewincome, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(101, Short.MAX_VALUE))
+        );
+        gl_contentPane.setVerticalGroup(
+                gl_contentPane.createParallelGroup(Alignment.LEADING)
+                    .addGroup(gl_contentPane.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(label)
+                        .addGap(18)
+                        .addComponent(addexpense, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18)
+                        .addComponent(addincome, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+
+                        .addGap(18)
+                        .addComponent(incomeexpense, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18)
+                        .addComponent(viewexpense, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18)
+                        .addComponent(viewincome, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+                        
+                        .addGap(18)
+                        .addComponent(logout, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(16, Short.MAX_VALUE))
+            );
+            contentPanel.setLayout(gl_contentPane);
+
+    }
+}
