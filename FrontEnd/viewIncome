@@ -1,0 +1,88 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+
+public class viewIncome extends JFrame {
+    DefaultTableModel model = new DefaultTableModel();
+    Container cnt = this.getContentPane();
+    JTable table = new JTable(model);
+    JButton button = new JButton("Back");
+    JButton show = new JButton("Show");
+    String Months[] = {"January", "February","March","April","May","June","July","July","August","September","October","November","December"};
+    JComboBox month = new JComboBox(Months);
+
+         String Years[] = {"2010", "2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"};
+        JComboBox year = new JComboBox(Years);
+
+         String months = (String) month.getSelectedItem();
+         String years = (String) year.getSelectedItem();
+        
+         
+
+    public viewIncome(){
+        cnt.setLayout(new FlowLayout(FlowLayout.CENTER));
+        model.addColumn("id");
+        model.addColumn("Months");
+        model.addColumn("Years");
+        model.addColumn("Income in Rupees");
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM viewincome where months=? and years=?");
+            preparedStatement.setString(1,months);
+            preparedStatement.setString(2,years);      
+            show.addActionListener(new ActionListener(){
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    ResultSet resultSet;
+                    try {
+                        resultSet = preparedStatement.executeQuery();
+                        while (resultSet.next()) {
+                            model.addRow(new Object[]{resultSet.getInt(1) , resultSet.getString(2) , resultSet.getString(3) , resultSet.getDouble(4)});
+                        } 
+                    } catch (SQLException e1) {
+                        // TODO Auto-generated catch block
+                         System.out.println(e1.getMessage());
+                    }
+                   
+                }
+                
+            });    
+            
+        }catch (Exception e) {
+            
+            System.out.println(e.getMessage());
+
+        }
+        JScrollPane pg = new JScrollPane(table);
+        cnt.add(pg);
+
+        button.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                Welcome.expense(new String[]{});
+            }
+            
+        });
+        cnt.add(month);
+        cnt.add(year);
+        cnt.add(show);
+        cnt.add(button);
+        this.pack();
+    }
+    public static void vi(String[] args) {
+        JFrame frame = new viewIncome();
+        frame.setTitle("View Income");
+        frame.setSize(600, 500);
+        frame.setVisible(true);
+       
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+}
