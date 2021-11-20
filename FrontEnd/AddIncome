@@ -1,0 +1,162 @@
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+public class AddIncome extends JFrame{
+          static AddIncome frame;
+          private static JPanel contentPanel;
+          private JTextField idUser;
+          private JComboBox month;
+          private JComboBox year;
+          private JTextField income;
+          public static void ai(String[] strings) {
+        EventQueue.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                try {
+                    frame = new AddIncome();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    //TODO: handle exception
+                    e.printStackTrace();
+                }
+                
+            }
+            
+        });
+    }
+    public AddIncome(){
+         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         setBounds(100, 100, 500, 500);
+         contentPanel = new JPanel();
+         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+         setContentPane(contentPanel);
+
+         JLabel mssgLabel = new JLabel("Add Income");
+
+         JLabel idUsers = new JLabel("Id User : ");
+         JLabel Month = new JLabel("Months : ");
+         JLabel Year = new JLabel("Year : ");
+         JLabel Income = new JLabel("Income : ");
+
+         idUser = new JTextField();
+         idUser.setColumns(10);
+
+         String Months[] = {"January", "February","March","April","May","June","July","July","August","September","October","November","December"};
+         month = new JComboBox(Months);
+
+         String Years[] = {"2010", "2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"};
+         year = new JComboBox(Years);
+
+         income = new JTextField();
+         income.setColumns(10);
+
+         JButton button = new JButton("Add Income");
+         button.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                String id = idUser.getText();
+                String months = (String) month.getSelectedItem();
+                String years = (String) year.getSelectedItem();
+                String ii = income.getText();
+                double Income = Double.parseDouble(ii);
+
+                int i = AddIncomeDB.save(id,months,years,Income);
+                if(i>0){
+                    JOptionPane.showMessageDialog(AddIncome.this,"Income added Successfully!!");
+                    Welcome.expense(new String[]{});
+                    frame.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(AddIncome.this, "Sorry income was not added!!");
+                }
+            }
+             
+         });
+        JButton back = new JButton("Back");
+        back.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                new Welcome();
+                frame.dispose();
+            }
+            
+        });
+        GroupLayout contentPane = new GroupLayout(contentPanel);
+        contentPane.setHorizontalGroup(
+            contentPane.createParallelGroup(Alignment.LEADING)
+            .addGroup(contentPane.createSequentialGroup()
+            .addContainerGap(10, Short.MAX_VALUE)
+            .addGroup(contentPane.createParallelGroup(Alignment.LEADING)
+            .addGroup(contentPane.createSequentialGroup()
+            .addGroup(contentPane.createParallelGroup(Alignment.LEADING)
+            .addComponent(idUsers)
+            .addComponent(Month, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+            .addComponent(Year, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+            .addComponent(Income, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE))
+            .addGap(10)
+            .addGroup(contentPane.createParallelGroup(Alignment.LEADING)
+            .addComponent(idUser, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+            .addComponent(month, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+            .addComponent(year, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+            .addComponent(income, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
+            .addGap(48))
+            .addGroup(Alignment.TRAILING, contentPane.createSequentialGroup()
+            .addGap(20)
+            .addGroup(contentPane.createParallelGroup(Alignment.TRAILING)
+            .addComponent(mssgLabel)
+            .addGroup(contentPane.createParallelGroup(Alignment.TRAILING)
+            .addComponent(mssgLabel)
+            .addGroup(contentPane.createSequentialGroup()
+            .addComponent(button, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+            .addGap(47)
+            .addComponent(back)))
+            .addGap(100)))))
+            .addGroup(contentPane.createSequentialGroup()
+            .addGap(146)
+            .addComponent(mssgLabel)
+            .addContainerGap(235, Short.MAX_VALUE))
+        );
+        contentPane.setVerticalGroup(
+            contentPane.createParallelGroup(Alignment.TRAILING)
+            .addGroup(contentPane.createSequentialGroup()
+            .addGap(37)
+            .addComponent(mssgLabel)
+            .addGap(43)
+            .addGroup(contentPane.createParallelGroup(Alignment.BASELINE)
+            .addComponent(idUsers)
+            .addComponent(idUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+            .addGap(28)
+            .addGroup(contentPane.createParallelGroup(Alignment.BASELINE)
+            .addComponent(Month)
+            .addComponent(month, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+            .addGap(28)
+            .addGroup(contentPane.createParallelGroup(Alignment.BASELINE)
+            .addComponent(Year)
+            .addComponent(year, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+            .addGap(28)
+            .addGroup(contentPane.createParallelGroup(Alignment.BASELINE)
+            .addComponent(Income)
+            .addComponent(income, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(ComponentPlacement.UNRELATED)
+            .addGroup(contentPane.createParallelGroup(Alignment.BASELINE)
+            .addComponent(button, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+            .addComponent(back))
+            .addGap(18)
+            .addComponent(mssgLabel)
+            .addGap(25))
+        );
+        contentPanel.setLayout(contentPane);
+     }
+
+}
