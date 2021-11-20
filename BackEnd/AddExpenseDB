@@ -1,0 +1,21 @@
+import java.sql.*;
+public class AddExpenseDB {
+    public static int save(String id, String months, String years, Double expense) {
+        int status =0;
+        try {
+            Connection connection = Database.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO viewIncome values(?,?,?,?)");
+            preparedStatement.setString(1, id);
+            preparedStatement.setString(2, months);
+            preparedStatement.setString(3, years);
+            preparedStatement.setDouble(4, expense);  
+            status = preparedStatement.executeUpdate();
+            connection.close();      
+        } catch (Exception e) {
+            //TODO: handle exception
+            System.out.println(e);
+        }
+        return status;
+    }
+
+}
